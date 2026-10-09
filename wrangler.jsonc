@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "smart-contract-learn-docs",
+  "compatibility_date": "2026-10-09",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "docs.contract.majhoon.site", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./docs/.vitepress/dist"
+  }
+}

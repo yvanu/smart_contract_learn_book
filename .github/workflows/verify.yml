@@ -1,0 +1,39 @@
+name: Verify learning handbook
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    name: Documentation build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install docs dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build VitePress
+        run: npm run docs:build
+
+  contracts:
+    name: Foundry build and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: examples/foundry
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Compile contracts
+        run: forge build
+      - name: Test contracts
+        run: forge test -vv

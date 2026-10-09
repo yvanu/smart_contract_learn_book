@@ -1,0 +1,13 @@
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+.wrangler/
+.env
+.env.*
+.dev.vars*
+coverage/
+broadcast/
+cache/
+out/
+lib/
+.DS_Store

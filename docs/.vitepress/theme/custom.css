@@ -1,0 +1,8 @@
+:root {
+  --vp-c-brand-1: #285cb0;
+  --vp-c-brand-2: #316cc8;
+  --vp-c-brand-soft: #ebf3ff;
+  --vp-home-hero-name-color: #2554a3;
+}
+.VPHome .tagline { line-height: 1.8; }
+.VPDoc h2 { letter-spacing: -0.02em; }
