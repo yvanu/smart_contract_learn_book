@@ -4,6 +4,7 @@
   "compatibility_date": "2026-10-09",
   "workers_dev": true,
   "routes": [
+    { "pattern": "contract.majhoon.site", "custom_domain": true },
     { "pattern": "docs.contract.majhoon.site", "custom_domain": true }
   ],
   "assets": {
