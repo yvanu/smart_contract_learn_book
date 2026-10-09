@@ -16,16 +16,18 @@
 
 | 项目 | 状态 | 备注 |
 | --- | --- | --- |
-| Docs VitePress 生产构建 | **尚未通过** | 2026-10-09 本机缺少 vitepress 依赖；受服务器可用内存限制未安装构建 |
-| Foundry 编译 | 待验证 | 需本地安装 `forge` 并执行 `forge build` |
-| Foundry 合约测试 | 待验证 | 需运行 `forge test -vv` |
-| Cloudflare Workers 部署 | **未执行** | 未检测到可直接使用的 Wrangler 身份认证；待部署凭证就绪 |
-| 自定义域名 HTTPS 验收 | **未通过** | 目标 `https://docs.contract.majhoon.site` 尚未可访问，不应当作已上线链接 |
+| Docs VitePress 生产构建 | **已通过（远程 CI）** | 2026-10-09 GitHub Actions `Verify learning handbook`，记录 37933601439；服务器没有执行构建 |
+| Foundry 编译 | **已通过（远程 CI）** | GitHub Actions 37933601439 的 `Foundry build and tests` job 成功 |
+| Foundry 合约测试 | **已通过（远程 CI）** | GitHub Actions 37933601439 执行 `forge test -vv` 成功；不代表专业安全审计 |
+| Cloudflare Workers 部署 | **已通过** | 本机 Wrangler 4.115.0 只上传远程构建静态文件，Worker `smart-contract-learn-docs`，Version ID `2f3cc5a7-e802-428b-8ad3-e081e6b8cd4a` |
+| 自定义域名 HTTPS 验收 | **已通过** | `https://contract.majhoon.site/`、`/roadmap`、`/05-project/escrow` 及 `https://docs.contract.majhoon.site/` 均 HTTP 200，TLS 校验成功 |
 | 主网资金安全审计 | **未进行** | 示例仅学习，不能管理真实资产 |
 | 文档内部导航链接静态检查 | **通过** | 23 个 Markdown 页面、28 个配置路由，未发现缺失目标 |
-| GitHub 推送 | **受阻** | 新仓库 GitHub 集成写入被 403 拒绝；工作区已生成，尚未提交远程 |
+| GitHub 推送 | **已完成** | 使用本地 Git SSH 推送 `main`（未使用 GitHub 连接器） |
+| GitHub 远程静态产物导出 | **已通过** | GitHub Actions 37933601465 已将 VitePress 编译输出发布至 `cf-dist` 分支 |
+| GitHub Actions 全自动 Cloudflare 发布 | **尚未启用** | 工作流 `.github/workflows/deploy.yml` 在缺少仓库 Secrets / `ENABLE_CF_DEPLOY` 时跳过；当前已使用本机 Wrangler 部署 |
 
-本机检测：`forge`、`vitepress` 和 `wrangler` 尚未处于 PATH；为避免 2C2G 服务器现有服务受影响，没有强行安装或执行高内存构建。远程 CI 校验已写入 `.github/workflows/verify.yml`，待 GitHub 推送成功后运行。
+2026-10-09 服务器曾在依赖安装阶段失去响应。恢复后严格避免在服务器上运行 `npm install` / VitePress 构建；全部依赖安装与前端、合约测试由 GitHub Actions 承担。服务器仅执行轻量的 Git、Wrangler 静态资源上传和 HTTPS 验收。**此部署方式不保证零内存消耗，但实际完成后服务器状态正常。**
 
 ## 下一个版本 v0.2
 

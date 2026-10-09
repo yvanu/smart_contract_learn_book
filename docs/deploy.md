@@ -1,6 +1,6 @@
 # 文档站部署与维护
 
-本站使用 **VitePress 1.6.4 + Cloudflare Workers Static Assets**，没有数据库或后端服务。独立 Worker 名称 `smart-contract-learn-docs`，预期域名 `docs.contract.majhoon.site`。
+本站使用 **VitePress 1.6.4 + Cloudflare Workers Static Assets**，没有数据库或后端服务。独立 Worker 名称 `smart-contract-learn-docs`，已上线域名 `contract.majhoon.site`，备用 `docs.contract.majhoon.site`。
 
 ## 本地预览
 
@@ -23,18 +23,27 @@ npx wrangler deploy -c wrangler.jsonc
 
 Wrangler 配置中的 custom domain 会尝试让 Cloudflare 为此子域创建 DNS 记录和证书；若域名已经绑定其他服务，必须先确认冲突再操作。
 
-## 推荐：GitHub Actions 自动部署
+## 低内存服务器专用：GitHub 远程构建
+
+为避免服务器上 `npm install` 或构建占满内存，仓库的 `.github/workflows/publish-assets.yml` 会在 GitHub Actions 中构建 VitePress，并将静态资源推送到 `cf-dist` 分支。
+
+服务器部署时只需拉取 `cf-dist` 分支的**已编译静态资源**，然后用现成的 Wrangler 执行 `wrangler deploy --assets <已编译资源目录> -c wrangler.jsonc`。这不需要在服务器安装 Node 依赖或本地构建。
+
+当前已采用该方法成功上线，`main` 分支仅保存源码，`cf-dist` 保存构建结果。Cloudflare Token 必须从可信的环境变量读取，不要写入部署脚本。
+
+## 可选：GitHub Actions 全自动部署
 
 仓库提供 `.github/workflows/deploy.yml`。在 GitHub 仓库 Settings → Secrets and variables → Actions 下配置两个 Secrets：`CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID`，再新增 Repository Variable `ENABLE_CF_DEPLOY=true`。之后向 `main` 推送会触发远程构建和 Worker 部署，服务器无需自己编译。缺少这些值时该工作流会跳过部署，而不是假报成功。
 
-另有 `.github/workflows/verify.yml` 对文档与 Foundry 合约执行远程验证。**只有 GitHub 仓库实际收到这些文件后工作流才会生效。**
+`.github/workflows/verify.yml` 已完成文档与 Foundry 合约的远程验证。`publish-assets.yml` 已成功生成 `cf-dist`。**全自动 Cloudflare 工作流目前因缺少仓库授权配置而跳过；不要将其误认为已经自动发布。**
 
 ## 发布后验收
 
 ```bash
+curl -I https://contract.majhoon.site/
+curl -I https://contract.majhoon.site/roadmap
+curl -I https://contract.majhoon.site/05-project/escrow
 curl -I https://docs.contract.majhoon.site/
-curl -I https://docs.contract.majhoon.site/roadmap
-curl -I https://docs.contract.majhoon.site/05-project/escrow
 ```
 
 检查是否为 2xx、TLS 是否正常、浏览器可打开侧边栏和搜索功能。并同步更新 [内容进度](/PROGRESS)。

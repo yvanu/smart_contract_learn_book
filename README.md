@@ -2,7 +2,7 @@
 
 一份面向**有 Python/Flask、数据库、API、Git 基础的后端工程师**的中文智能合约实战教程。以 Ethereum EVM / Solidity / Foundry 为主线，带你从第一份合约走到一个有权限、状态机、资金和反向测试的 Escrow 实践项目。
 
-- 📖 **文档站计划域名**：[docs.contract.majhoon.site](https://docs.contract.majhoon.site/)（以实际部署验证为准）
+- 📖 **在线学习手册**：[contract.majhoon.site](https://contract.majhoon.site/)（备用：[docs.contract.majhoon.site](https://docs.contract.majhoon.site/)）
 - 🗺️ [12 周学习路线](docs/roadmap.md)
 - 🚀 [零基础第一课](docs/00-start/index.md)
 - 🧠 [从后端到链上的知识迁移](docs/00-start/backend-map.md)
@@ -42,14 +42,14 @@ Foundry 安装指南：[getfoundry.sh](https://getfoundry.sh/introduction/instal
 
 ## Cloudflare 部署
 
-独立 Worker：`smart-contract-learn-docs`；拟使用自定义域名 `docs.contract.majhoon.site`。
+独立 Worker：`smart-contract-learn-docs`；已部署至 `contract.majhoon.site` 和 `docs.contract.majhoon.site`。
 
 ```bash
 npm run docs:build
 npx wrangler deploy -c wrangler.jsonc
 ```
 
-部署需要配置有效的 Cloudflare 身份认证，不要提交任何 Token；详见 [部署文档](docs/deploy.md)。
+为避免低内存服务器再次因依赖安装或构建失去响应，已配置 GitHub Actions **远程构建并将产物发布到 `cf-dist` 分支**，服务器仅做 Git 拉取和 Wrangler 静态文件上传。可选的全自动 Cloudflare 部署需要单独设置仓库 Secrets；详见 [部署文档](docs/deploy.md)。切勿提交任何 Token。
 
 ## 安全提示
 
