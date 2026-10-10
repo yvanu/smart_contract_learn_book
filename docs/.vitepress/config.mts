@@ -33,7 +33,7 @@ export default defineConfig({
       { text: '00 · 认识智能合约', items: [
         { text: '00-1 为什么学智能合约', link: '/00-start/' },
         { text: '零基础术语词典（随时查）', link: '/00-start/glossary' },
-        { text: '新手常见报错与排查', link: '/00-start/troubleshooting' }
+        { text: '新手常见报错与排查', link: '/00-start/troubleshooting' },
         { text: '00-2 环境与第一个合约', link: '/00-start/environment' },
         { text: '00-3 从后端迁移到链上', link: '/00-start/backend-map' }
       ]},
