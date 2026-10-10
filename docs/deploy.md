@@ -27,7 +27,16 @@ Wrangler 配置中的 custom domain 会尝试让 Cloudflare 为此子域创建 D
 
 为避免服务器上 `npm install` 或构建占满内存，仓库的 `.github/workflows/publish-assets.yml` 会在 GitHub Actions 中构建 VitePress，并将静态资源推送到 `cf-dist` 分支。
 
-服务器部署时只需拉取 `cf-dist` 分支的**已编译静态资源**，然后用现成的 Wrangler 执行 `wrangler deploy --assets <已编译资源目录> -c wrangler.jsonc`。这不需要在服务器安装 Node 依赖或本地构建。
+服务器部署时只需拉取 `cf-dist` 分支的**已编译静态资源**，然后用**现成的 Wrangler 可执行程序**执行 `wrangler deploy --assets <已编译资源目录> -c wrangler.jsonc`。这不需要在服务器安装 Node 依赖或本地构建。
+
+**低内存发布门禁：**
+
+1. 先提交教材变更到 `main`，由 GitHub Actions 远程安装依赖并构建；等待 `Build Docs Assets for Cloudflare` 成功，确认 `cf-dist` 已包含这次提交生成的产物。
+2. 服务器只下载 `cf-dist` 构建产物到**独立临时目录**，不要在正在使用的源码目录中清空文件或运行 `npm install`。
+3. 使用已安装、经过验证的 Wrangler CLI 上传静态产物。若当前仓库没有 `node_modules/.bin/wrangler`，**不要用默认 `npx` 触发自动下载/安装**，先查找此前用于发布的现有 CLI 路径或改用 GitHub 远程部署。
+4. 发布后检查域名主页、术语词典、Remix 新教程和排错页是否为 HTTP 200，再核对侧边栏能否进入这些页面；失败时不应假称已发布。
+
+本机**不执行** VitePress 构建、npm 依赖安装或 Foundry 测试，也不在低内存服务器上并发执行多个检查任务。
 
 当前已采用该方法成功上线，`main` 分支仅保存源码，`cf-dist` 保存构建结果。Cloudflare Token 必须从可信的环境变量读取，不要写入部署脚本。
 

@@ -4,7 +4,10 @@
 
 - 📖 **在线学习手册**：[contract.majhoon.site](https://contract.majhoon.site/)（备用：[docs.contract.majhoon.site](https://docs.contract.majhoon.site/)）
 - 🗺️ [12 周学习路线](docs/roadmap.md)
-- 🚀 [零基础第一课](docs/00-start/index.md)
+- 🚀 [零基础第一课：从生活故事认识区块链](docs/00-start/index.md)
+- 🖱️ [Remix 每一步操作与排错](docs/00-start/environment.md)
+- 📚 [零基础术语词典](docs/00-start/glossary.md)
+- 🛠️ [新手常见报错与排查](docs/00-start/troubleshooting.md)
 - 🧠 [从后端到链上的知识迁移](docs/00-start/backend-map.md)
 - 💻 [Foundry 完整示例](examples/foundry/)
 - 🛡️ [重入、权限和威胁建模](docs/04-security/index.md)
