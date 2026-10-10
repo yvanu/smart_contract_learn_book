@@ -2,7 +2,7 @@
 
 维护日期：2026-10-10。此页是**教材建设状态**，不是学习者的学习成绩。
 
-## 2026-10-10 新手可读性修订（正在本地整理，尚未当作线上部署验收）
+## 2026-10-10 新手可读性修订（已发布并完成线上冒烟验收）
 
 - 重新编写 00～05 系列共 16 个核心章节：先讲生活场景，再解释术语，再给可操作步骤和预期结果。
 - 新增 [零基础术语词典](/00-start/glossary) 与 [新手常见报错与排查](/00-start/troubleshooting)，降低术语和环境操作的入门门槛。
@@ -10,7 +10,11 @@
 - Foundry / Escrow 课程直接对应仓库测试文件，补充测试身份、截止时间、拒收 ETH、重复结算的逐步讲解。
 - 06-1 进阶方向页改成先自测、再按智能合约 / Web3 全栈 / 安全三条路线逐步继续；06-2 面试自测改成白话解释、技术解释、常见误区与练习链接。
 - 这一轮**只修改教材**，不修改智能合约源码。2026-10-10 静态检查确认 25 个 Markdown 页面站内链接和代码围栏配对未发现错误；未执行本地构建（服务器低内存）。
-- **发布阻塞**：当前 GitHub 连接器提交 Git blob 返回 HTTP 403（Resource not accessible by integration），所以本轮内容目前仅保存在 DevSpace 工作区，尚未推送 `main`，也未触发新一轮远程编译或 Cloudflare 更新。下方 2026-10-09 的 CI、编译、部署记录是**历史已验收状态**，不得当成本轮验收。
+- **本地 Git SSH 提交**：直接通过本机 `git` 推送 `main`；教材提交 `6539a21`，侧边栏配置修复提交 `1fded57`，未使用 GitHub 连接器。
+- **GitHub 远程验证**：[Verify learning handbook](https://github.com/yvanu/smart_contract_learn_book/actions/runs/38018659772) 的文档构建与 Foundry 测试通过；[Build Docs Assets for Cloudflare](https://github.com/yvanu/smart_contract_learn_book/actions/runs/38018659733) 成功生成来自 `1fded579` 的 `cf-dist` 静态资源。
+- **Cloudflare 首次发布新手教材**：用本机已有 Token 与缓存 Wrangler 4.115.0 上传 108 个静态文件，更新 `smart-contract-learn-docs`；当次 Version ID `3a8976fe-05de-47cc-984c-09d45c68a66b`（后续同步进度页会产生新版本）。已检查主页、术语词典、排错手册、Remix 入门、Escrow 实战和备用域名，均返回 HTTP 200。
+- **低内存保护**：本机没有执行 `npm install`、VitePress build 或 Foundry build/test；部署后可用内存约 586MB，Swap 为 0。自动 Cloudflare 部署仍未启用，后续继续使用远程构建 + 本机静态上传。
+- **历史数据说明**：下方 2026-10-09 的旧 Worker Version ID、页面数量等是首次发布记录，并非本轮最新版数据。
 
 
 ## v0.1 基础教材
@@ -23,7 +27,7 @@
 - [x] Escrow 完整项目设计、合约实现、测试与验收说明
 - [x] 面试自测和后续深造建议
 
-## 可执行代码与验证
+## v0.1 首次发布的历史验证（2026-10-09）
 
 | 项目 | 状态 | 备注 |
 | --- | --- | --- |
