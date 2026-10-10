@@ -21,7 +21,13 @@ jobs:
       - name: Install docs dependencies
         run: npm install --no-audit --no-fund
       - name: Build VitePress
-        run: npm run docs:build
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run docs:build 2>&1 | tee /tmp/vitepress-build.log || {
+            echo "::error title=VitePress build diagnostics::$(tail -n 25 /tmp/vitepress-build.log | tr '\n' ' ' | cut -c1-3500)"
+            exit 1
+          }
 
   contracts:
     name: Foundry build and tests
